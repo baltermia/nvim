@@ -25,7 +25,7 @@ vim.o.termguicolors = true
 -- Configure leader key to Space
 map('n', '<Space>', '<NOP>', { noremap = true, silent = true })
 vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
+vim.g.maplocalleader = " "
 
 -- Configure CamelCaseMotion plugin leader key
 vim.g.wordmotion_prefix = '<leader>'
