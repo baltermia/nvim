@@ -8,6 +8,9 @@ end
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+-- Enable yanking to go to system clipboard
+vim.opt.clipboard = "unnamedplus"
+
 -- Disable arrow keys for normal mode navigation
 map('n', '<Up>', '<NOP>', { noremap = true, silent = true })
 map('n', '<Down>', '<NOP>', { noremap = true, silent = true })
