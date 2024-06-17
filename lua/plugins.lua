@@ -38,6 +38,7 @@ return require('lazy').setup({
     'neovim/nvim-lspconfig',
   },
 
+  -- show undo history in a tree
   'mbbill/undotree',
 })
 

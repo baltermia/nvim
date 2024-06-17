@@ -1,8 +1,8 @@
 -- map helper
-local function map(mode, lhs, rhs, opts)
+local function map(modes, lhs, rhs, opts)
     local options = {noremap = true}
     if opts then options = vim.tbl_extend('force', options, opts) end
-    vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+    vim.keymap.set(modes, lhs, rhs, options)
 end
 
 vim.g.loaded_netrw = 1
@@ -10,6 +10,37 @@ vim.g.loaded_netrwPlugin = 1
 
 -- Enable yanking to go to system clipboard
 vim.opt.clipboard = 'unnamedplus'
+
+-- use nerdfont
+vim.g.have_nerd_font = true
+
+-- minimum amount of lines to keep above and below the cursor
+vim.opt.scrolloff = 10
+
+-- Set highlight on search, but clear on pressing <Esc> in normal mode
+vim.opt.hlsearch = true
+map('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
+-- enable ctrl+s/S to save file/all
+map({ "i", "x", "n", "s" }, '<C-s>', '<cmd>w<CR><esc>', { desc = "Save file" })
+map({ "i", "x", "n", "s" }, '<C-S>', '<cmd>wa<CR><esc>', { desc = "Save all files" })
+
+-- Highlight when yanking (copying) text
+--  Try it with `yap` in normal mode
+--  See `:help vim.highlight.on_yank()`
+vim.api.nvim_create_autocmd('TextYankPost', {
+  desc = 'Highlight when yanking (copying) text',
+  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+})
+
+-- Diagnostic keymaps
+map('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
+map('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
+map('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
+map('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
 -- Disable arrow keys for normal mode navigation
 map('n', '<Up>', '<NOP>', { noremap = true, silent = true })
