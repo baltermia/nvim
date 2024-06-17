@@ -13,6 +13,7 @@ vim.opt.clipboard = 'unnamedplus'
 
 -- use nerdfont
 vim.g.have_nerd_font = true
+vim.o.guifont = 'CaskaydiaCove NF'
 
 -- minimum amount of lines to keep above and below the cursor
 vim.opt.scrolloff = 10
@@ -24,6 +25,10 @@ map('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- enable ctrl+s/S to save file/all
 map({ "i", "x", "n", "s" }, '<C-s>', '<cmd>w<CR><esc>', { desc = "Save file" })
 map({ "i", "x", "n", "s" }, '<C-S>', '<cmd>wa<CR><esc>', { desc = "Save all files" })
+
+-- quickref next/prev
+map('n', '<leader>j', '<cmd>cnext<CR><esc>', { noremap = true, silent = true })
+map('n', '<leader>k', '<cmd>cprev<CR><esc>', { noremap = true, silent = true })
 
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
@@ -170,6 +175,52 @@ require('mason').setup()
 require('mason-lspconfig').setup()
 
 require('Comment').setup()
+
+-- configure telescope to show themes
+require('telescope').setup({
+  extensions = {
+    ['ui-select'] = {
+      require('telescope.themes').get_dropdown(),
+    },
+  }
+})
+
+-- Enable Telescope extensions if they are installed
+pcall(require('telescope').load_extension, 'fzf')
+pcall(require('telescope').load_extension, 'ui-select')
+
+local builtin = require('telescope.builtin')
+map('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
+map('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
+map('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
+map('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
+map('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
+map('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+map('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
+map('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
+map('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
+map('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+
+-- search themes
+vim.keymap.set('n', '<leader>/', function()
+  builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+    winblend = 10,
+    previewer = false,
+  })
+end, { desc = '[/] Fuzzily search in current buffer' })
+
+-- grep buffers
+vim.keymap.set('n', '<leader>s/', function()
+  builtin.live_grep {
+    grep_open_files = true,
+    prompt_title = 'Live Grep in Open Files',
+  }
+end, { desc = '[S]earch [/] in Open Files' })
+
+-- Shortcut for searching your Neovim configuration files
+vim.keymap.set('n', '<leader>sn', function()
+  builtin.find_files { cwd = vim.fn.stdpath 'config' }
+end, { desc = '[S]earch [N]eovim files' })
 
 vim.cmd('autocmd FileType cs setlocal omnifunc=v:lua.vim.lsp.omnifunc')
 
