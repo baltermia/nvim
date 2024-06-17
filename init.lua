@@ -346,7 +346,7 @@ vim.cmd([[colorscheme vscode]])
 -- treesitter
 require('nvim-treesitter.install').prefer_git = true
 require('nvim-treesitter.configs').setup({
-  ensure_installed = { 'c', 'cpp', 'c_sharp' },
+  ensure_installed = { 'c', 'cpp', 'c_sharp', 'cmake' },
   auto_install = true,
   highlight = {
     enable = true,
