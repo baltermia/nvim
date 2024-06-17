@@ -36,6 +36,8 @@ return require('lazy').setup({
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
     'neovim/nvim-lspconfig',
-  }
+  },
+
+  'mbbill/undotree',
 })
 

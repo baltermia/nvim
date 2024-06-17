@@ -70,6 +70,10 @@ vim.api.nvim_set_hl(0, 'IlluminatedWordText', { link = 'Visual' })
 vim.api.nvim_set_hl(0, 'IlluminatedWordRead', { link = 'Visual' })
 vim.api.nvim_set_hl(0, 'IlluminatedWordWrite', { link = 'Visual' })
 
+-- toggle undotree
+map('n', '<leader>u', ':UndotreeToggle<CR>', { noremap = true, silent = true })
+vim.g.undotree_WindowLayout = 3
+
 -- lazy nvim stuff
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
