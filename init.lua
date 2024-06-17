@@ -9,7 +9,7 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
 -- Enable yanking to go to system clipboard
-vim.opt.clipboard = "unnamedplus"
+vim.opt.clipboard = 'unnamedplus'
 
 -- Disable arrow keys for normal mode navigation
 map('n', '<Up>', '<NOP>', { noremap = true, silent = true })
@@ -27,8 +27,8 @@ vim.o.termguicolors = true
 
 -- Configure leader key to Space
 map('n', '<Space>', '<NOP>', { noremap = true, silent = true })
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
 
 -- Configure CamelCaseMotion plugin leader key
 vim.g.wordmotion_prefix = '<leader>'
@@ -66,19 +66,19 @@ end
 map('n', '<leader><Tab>', ':BufferLineCycleNext<CR>', { noremap = true, silent = true })
 
 -- change the highlight style
-vim.api.nvim_set_hl(0, "IlluminatedWordText", { link = "Visual" })
-vim.api.nvim_set_hl(0, "IlluminatedWordRead", { link = "Visual" })
-vim.api.nvim_set_hl(0, "IlluminatedWordWrite", { link = "Visual" })
+vim.api.nvim_set_hl(0, 'IlluminatedWordText', { link = 'Visual' })
+vim.api.nvim_set_hl(0, 'IlluminatedWordRead', { link = 'Visual' })
+vim.api.nvim_set_hl(0, 'IlluminatedWordWrite', { link = 'Visual' })
 
 -- lazy nvim stuff
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
+    'git',
+    'clone',
+    '--filter=blob:none',
+    'https://github.com/folke/lazy.nvim.git',
+    '--branch=stable', -- latest stable release
     lazypath,
   })
 end
@@ -129,7 +129,7 @@ require('illuminate').configure({
 
 require('gitsigns').setup()
 
-require("nvim-tree").setup()
+require('nvim-tree').setup()
 
 require('mason').setup()
 require('mason-lspconfig').setup()
