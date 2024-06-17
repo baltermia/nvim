@@ -169,6 +169,8 @@ require('nvim-tree').setup()
 require('mason').setup()
 require('mason-lspconfig').setup()
 
+require('Comment').setup()
+
 vim.cmd('autocmd FileType cs setlocal omnifunc=v:lua.vim.lsp.omnifunc')
 
 -- Set the colorscheme

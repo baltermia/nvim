@@ -40,5 +40,11 @@ return require('lazy').setup({
 
   -- show undo history in a tree
   'mbbill/undotree',
+
+  -- automatically detect tabstop and shiftwidth
+  'tpope/vim-sleuth',
+
+  -- comment with gc
+  { 'numToStr/Comment.nvim' },
 })
 
