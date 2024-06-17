@@ -15,6 +15,15 @@ vim.opt.clipboard = 'unnamedplus'
 vim.g.have_nerd_font = true
 vim.o.guifont = 'CaskaydiaCove NF'
 
+-- neovide keybinds
+if vim.g.neovide then
+  map('n', '<C-+>', ':lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.1<CR>')
+  map('n', '<C-->', ':lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.1<CR>')
+  map('n', '<C-0>', ':lua vim.g.neovide_scale_factor = 1<CR>')
+  map('n', '<C-ScrollWheelUp>', ':lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.1<CR>')
+  map('n', '<C-ScrollWheelDown>', ':lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.1<CR>')
+end
+
 -- minimum amount of lines to keep above and below the cursor
 vim.opt.scrolloff = 10
 
@@ -27,8 +36,8 @@ map({ "i", "x", "n", "s" }, '<C-s>', '<cmd>w<CR><esc>', { desc = "Save file" })
 map({ "i", "x", "n", "s" }, '<C-S>', '<cmd>wa<CR><esc>', { desc = "Save all files" })
 
 -- quickref next/prev
-map('n', '<leader>j', '<cmd>cnext<CR><esc>', { noremap = true, silent = true })
-map('n', '<leader>k', '<cmd>cprev<CR><esc>', { noremap = true, silent = true })
+map('n', '<C-j>', '<cmd>cnext<CR>')
+map('n', '<C-k>', '<cmd>cprev<CR>')
 
 -- Highlight when yanking (copying) text
 vim.api.nvim_create_autocmd('TextYankPost', {
@@ -128,19 +137,21 @@ require('neoscroll').setup()
 
 require('bufferline').setup({
   options = {
-    mode = 'buffers',
-    offsets = {
-      { filetype = 'NvimTree', text = 'File Explorer', text_align = 'center' }
+    close_command = 'bdelete %d',
+    indicator = {
+      style = 'icon',
+      icon = ' ',
     },
-  },
-  highlights = {
-    buffer_selected = {
-      italic = false
+    left_trunc_marker = '',
+    modified_icon = '●',
+    offsets = { 
+      { filetype = 'NvimTree', text = 'File Explorer', text_align = 'center' },
+      { filetype = 'Undotree', text = 'Undo Tree', text_align = 'center' },
     },
-    indicator_selected = {
-      fg = { attribute = 'fg', highlight = 'Function' },
-      italic = false
-    }
+    right_mouse_command = 'bdelete! %d',
+    right_trunc_marker = '',
+    show_close_icon = false,
+    show_tab_indicators = true,
   },
 })
 
@@ -148,7 +159,8 @@ require('ibl').setup()
 
 require('lualine').setup {
   options = {
-    icons_enabled = true
+    icons_enabled = true,
+    theme = 'vscode',
   }
 }
 
@@ -317,6 +329,9 @@ require('gruvbox').setup({
   contrast = 'hard',
 })
 
+require('vscode').setup()
+
 -- Set the colorscheme
-vim.cmd('colorscheme gruvbox')
+vim.o.background = 'dark'
+vim.cmd([[colorscheme vscode]])
 

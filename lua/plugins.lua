@@ -7,6 +7,7 @@ return require('lazy').setup({
 
   -- color theme
   { 'ellisonleao/gruvbox.nvim', priority = 1000 , config = true },
+  { 'Mofiqul/vscode.nvim', priority = 1000 , config = true },
 
   -- bufferline (the tabs above)
   { 'akinsho/bufferline.nvim', requires = 'nvim-tree/nvim-web-devicons' },
@@ -17,6 +18,7 @@ return require('lazy').setup({
   -- motion with leader + [wbe] within a word
   'chaoren/vim-wordmotion',
 
+  -- better way to add brackets around stuff
   'kylechui/nvim-surround',
 
   -- highlights other uses of a word that's under the cursor
@@ -69,6 +71,6 @@ return require('lazy').setup({
       'hrsh7th/cmp-cmdline',
       'neovim/nvim-lspconfig',
     }
-  }
+  },
 })
 
