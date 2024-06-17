@@ -19,7 +19,7 @@ return require('lazy').setup({
   'chaoren/vim-wordmotion',
 
   -- better way to add brackets around stuff
-  'kylechui/nvim-surround',
+  'echasnovski/mini.nvim',
 
   -- highlights other uses of a word that's under the cursor
   'RRethy/vim-illuminate',
@@ -38,8 +38,8 @@ return require('lazy').setup({
     dependencies = {
       { 'williamboman/mason.nvim', config = true },
       'williamboman/mason-lspconfig.nvim',
-      { 'folke/neodev.nvim', opts = {} },
       'WhoIsSethDaniel/mason-tool-installer.nvim',
+      'j-hui/fidget.nvim',
     },
   },
 

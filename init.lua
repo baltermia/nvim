@@ -1,6 +1,6 @@
 -- map helper
 local function map(modes, lhs, rhs, opts)
-    local options = {noremap = true}
+    local options = { noremap = true }
     if opts then options = vim.tbl_extend('force', options, opts) end
     vim.keymap.set(modes, lhs, rhs, options)
 end
@@ -14,6 +14,10 @@ vim.opt.clipboard = 'unnamedplus'
 -- use nerdfont
 vim.g.have_nerd_font = true
 vim.o.guifont = 'CaskaydiaCove NF'
+
+-- since surround uses [s], replace the old s functionality with ss
+map('n', 's', '', { noremap = true })
+map('n', 'ss', 'xi', { noremap = true, silent = true })
 
 -- neovide keybinds
 if vim.g.neovide then
@@ -164,7 +168,9 @@ require('lualine').setup {
   }
 }
 
-require('nvim-surround').setup()
+-- better around/inner and surround with s[acd] instead of [ycd]s
+require('mini.ai').setup({ n_lines = 500 })
+require('mini.surround').setup()
 
 require('illuminate').configure({
   providers = {
@@ -292,7 +298,7 @@ require('mason').setup()
 local ensure_installed = vim.tbl_keys(servers or {})
 require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
-require('mason-lspconfig').setup {
+require('mason-lspconfig').setup({
   handlers = {
     function(server_name)
       local server = servers[server_name] or {}
@@ -300,7 +306,9 @@ require('mason-lspconfig').setup {
       require('lspconfig')[server_name].setup(server)
     end,
   },
-}
+})
+
+require('fidget').setup()
 
 -- cmp
 cmp = require('cmp')
