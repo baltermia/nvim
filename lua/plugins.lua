@@ -32,10 +32,13 @@ return require('lazy').setup({
   'moll/vim-bbye',
 
   -- lsp stuff
-  {
-    'williamboman/mason.nvim',
-    'williamboman/mason-lspconfig.nvim',
-    'neovim/nvim-lspconfig',
+  { 'neovim/nvim-lspconfig',
+    dependencies = {
+      { 'williamboman/mason.nvim', config = true },
+      'williamboman/mason-lspconfig.nvim',
+      { 'folke/neodev.nvim', opts = {} },
+      'WhoIsSethDaniel/mason-tool-installer.nvim',
+    },
   },
 
   -- show undo history in a tree
@@ -47,6 +50,7 @@ return require('lazy').setup({
   -- comment with gc
   { 'numToStr/Comment.nvim' },
 
+  -- telescope
   { 'nvim-telescope/telescope.nvim', 
     dependencies = { 
       'nvim-lua/plenary.nvim', 
@@ -55,5 +59,16 @@ return require('lazy').setup({
       'nvim-tree/nvim-web-devicons',
     },
   },
+
+  -- auto cmplete
+  { 'hrsh7th/nvim-cmp',
+    dependencies = { 
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-path',
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-cmdline',
+      'neovim/nvim-lspconfig',
+    }
+  }
 })
 

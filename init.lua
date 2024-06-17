@@ -31,8 +31,6 @@ map('n', '<leader>j', '<cmd>cnext<CR><esc>', { noremap = true, silent = true })
 map('n', '<leader>k', '<cmd>cprev<CR><esc>', { noremap = true, silent = true })
 
 -- Highlight when yanking (copying) text
---  Try it with `yap` in normal mode
---  See `:help vim.highlight.on_yank()`
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
@@ -159,7 +157,6 @@ require('nvim-surround').setup()
 require('illuminate').configure({
   providers = {
     'lsp',
-    'treesitter',
     'regex',
   },
   delay = 100,
@@ -170,9 +167,6 @@ require('illuminate').configure({
 require('gitsigns').setup()
 
 require('nvim-tree').setup()
-
-require('mason').setup()
-require('mason-lspconfig').setup()
 
 require('Comment').setup()
 
@@ -222,7 +216,106 @@ vim.keymap.set('n', '<leader>sn', function()
   builtin.find_files { cwd = vim.fn.stdpath 'config' }
 end, { desc = '[S]earch [N]eovim files' })
 
-vim.cmd('autocmd FileType cs setlocal omnifunc=v:lua.vim.lsp.omnifunc')
+-- LSP stuff
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
+  callback = function(event)
+
+    -- keybinds
+    map('n', 'gd', require('telescope.builtin').lsp_definitions, { desc = '[G]oto [D]efinition' })
+    map('n', 'gr', require('telescope.builtin').lsp_references, { desc = '[G]oto [R]eferences' })
+    map('n', 'gI', require('telescope.builtin').lsp_implementations, { desc = '[G]oto [I]mplementation' })
+    map('n', '<leader>D', require('telescope.builtin').lsp_type_definitions, { desc = 'Type [D]efinition' })
+    map('n', '<leader>ds', require('telescope.builtin').lsp_document_symbols, { desc = '[D]ocument [S]ymbols' })
+    map('n', '<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, { desc = '[W]orkspace [S]ymbols' })
+    map('n', '<leader>rn', vim.lsp.buf.rename, { desc = '[R]e[n]ame' })
+    map('n', '<leader>ca', vim.lsp.buf.code_action, { desc = '[C]ode [A]ction' })
+    map('n', 'K', vim.lsp.buf.hover, { desc = 'Hover Documentation' })
+    map('n', 'gD', vim.lsp.buf.declaration, { desc = '[G]oto [D]eclaration' })
+
+    -- highlights references
+    local client = vim.lsp.get_client_by_id(event.data.client_id)
+    if client and client.server_capabilities.documentHighlightProvider then
+      local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
+      vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+        buffer = event.buf,
+        group = highlight_augroup,
+        callback = vim.lsp.buf.document_highlight,
+      })
+
+      vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+        buffer = event.buf,
+        group = highlight_augroup,
+        callback = vim.lsp.buf.clear_references,
+      })
+
+      vim.api.nvim_create_autocmd('LspDetach', {
+        group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
+        callback = function(event2)
+          vim.lsp.buf.clear_references()
+          vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = event2.buf }
+        end,
+      })
+    end
+
+    -- inlay hints
+    if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
+      map('<leader>th', function()
+        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+      end, '[T]oggle Inlay [H]ints')
+    end
+  end
+})
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+
+local servers = {
+  clangd = {},
+}
+
+-- mason
+require('mason').setup()
+
+local ensure_installed = vim.tbl_keys(servers or {})
+require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+
+require('mason-lspconfig').setup {
+  handlers = {
+    function(server_name)
+      local server = servers[server_name] or {}
+      server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+      require('lspconfig')[server_name].setup(server)
+    end,
+  },
+}
+
+-- cmp
+cmp = require('cmp')
+cmp.setup({
+  completion = { completeopt = 'menu,menuone,noinsert' },
+  mapping = cmp.mapping.preset.insert {
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<CR>'] = cmp.mapping.confirm { select = true },
+    ['<Tab>'] = cmp.mapping.select_next_item(),
+    ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+    ['<C-Space>'] = cmp.mapping.complete {},
+  },
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'path' },
+    { name = 'buffer' },
+  },
+  window = {
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
+  },
+})
+
+require('gruvbox').setup({
+  contrast = 'hard',
+})
 
 -- Set the colorscheme
 vim.cmd('colorscheme gruvbox')
