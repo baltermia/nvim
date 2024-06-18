@@ -66,19 +66,19 @@ The `<leader>` key is set to `<Space>`.
 
 ### LSP
 
-| Keybind         | Action                                      |
-|-----------------|---------------------------------------------|
-| `gd`            | **G**o to **d**efinition                    |
-| `gr`            | **G**o to **r**eferences                    |
-| `gI`            | **G**o to **i**mplementation                |
-| `<Leader>D`     | Go to type **d**efinition                   |
-| `<Leader>ds`    | Search **d**ocument **s**ymbols             |
-| `<Leader>ws`    | Search **w**orkspace **s**ymbols            |
-| `<Leader>rn`    | **R**ename **s**ymbol                       |
-| `<Leader>ca`    | Show **c**ode **a**ctions                   |
-| `K`             | Show hover documentation                    |
-| `gD`            | **G**o to **d**eclaration                   |
-| `<Leader>ih`    | Toggle **i**nlay **h**ints                  |
+| Keybind               | Action                                      |
+|-----------------------|---------------------------------------------|
+| `gd`                  | **G**o to **d**efinition                    |
+| `gr`                  | **G**o to **r**eferences                    |
+| `gI`                  | **G**o to **i**mplementation                |
+| `go`                  | **G**o to type definition                   |
+| `<Leader>ds`          | Search **d**ocument **s**ymbols             |
+| `<Leader>ws`          | Search **w**orkspace **s**ymbols            |
+| `<Leader>rn` & `<F2>` | **R**ename **s**ymbol                       |
+| `<Leader>ca`          | Show **c**ode **a**ctions                   |
+| `K`                   | Show hover documentation                    |
+| `gD`                  | **G**o to **d**eclaration                   |
+| `<Leader>ih`          | Toggle **i**nlay **h**ints                  |
 
 ### Neovide
 
