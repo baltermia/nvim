@@ -175,6 +175,7 @@ require('mini.surround').setup()
 require('illuminate').configure({
   providers = {
     'lsp',
+    'treesitter',
     'regex',
   },
   delay = 100,
@@ -278,9 +279,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     -- inlay hints
     if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
-      map('<leader>th', function()
+      map('<leader>ih', function()
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-      end, '[T]oggle Inlay [H]ints')
+      end, 'Toggle [I]nlay [H]ints')
     end
   end
 })
