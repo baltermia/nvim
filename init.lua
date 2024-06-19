@@ -162,9 +162,11 @@ require('bufferline').setup({
 require('ibl').setup()
 
 require('lualine').setup {
+  extensions = { 'nvim-tree' },
+  theme = 'vscode',
   options = {
     icons_enabled = true,
-    theme = 'vscode',
+    globalstatus = true,
   }
 }
 
@@ -287,17 +289,34 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end
 })
 
+local servers = {
+  cmake,
+  clangd,
+  omnisharp,
+}
+
+local tools = {
+  -- cmake
+  "cmakelang",
+
+  -- c++
+  "cpptools",
+  "sonarlint-language-server",
+  "clang-format",
+
+  -- c#
+  "csharpier",
+  "netcoredbg",
+}
+
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
-
-local servers = {
-  clangd = {},
-}
 
 -- mason
 require('mason').setup()
 
 local ensure_installed = vim.tbl_keys(servers or {})
+vim.list_extend(ensure_installed, tools)
 require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
 require('mason-lspconfig').setup({
@@ -345,10 +364,17 @@ require('vscode').setup()
 vim.o.background = 'dark'
 vim.cmd([[colorscheme vscode]])
 
+local langs = { 
+  'c', 
+  'cpp', 
+  'c_sharp', 
+  'cmake' 
+}
+
 -- treesitter
 require('nvim-treesitter.install').prefer_git = true
 require('nvim-treesitter.configs').setup({
-  ensure_installed = { 'c', 'cpp', 'c_sharp', 'cmake' },
+  ensure_installed = langs,
   auto_install = true,
   highlight = {
     enable = true,
