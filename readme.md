@@ -27,6 +27,7 @@ The `<leader>` key is set to `<Space>`.
 | `<Leader>t`     | Toggle Nvim-Tree                            |
 | `<Leader>x`     | Focus on Nvim-Tree                          |
 | `<Leader>u`     | Toggle UndoTree                             |
+| `<Leader>c`     | Close current window                        |
 
 ## Plugin Specific Keybinds
 
@@ -107,6 +108,15 @@ The `<leader>` key is set to `<Space>`.
 | `<C-e>`      | Close the completion menu                   |
 | `<C-f>`      | Scroll down in the documentation window     |
 | `<C-b>`      | Scroll up in the documentation window       |
+
+### Diagnostics
+
+| Motion       | Description                               |
+|--------------|-------------------------------------------|
+| `[d`         | Go to **previous** **D**iagnostic message |
+| `**d`        | Go to **next** **D**iagnostic message     |
+| `<leader>de` | Show **d**iagnostic **E**rror messages    |
+| `<leader>dq` | Open **d**iagnostic **Q**uickfix list     |
 
 
 ## Inbuilt Plugin Keybinds Reference

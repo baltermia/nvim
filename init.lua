@@ -15,6 +15,12 @@ vim.opt.clipboard = 'unnamedplus'
 vim.g.have_nerd_font = true
 vim.o.guifont = 'CaskaydiaCove NF'
 
+-- open new splits on the right instead of on top
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "help",
+  command = "wincmd L",
+})
+
 -- since surround uses [s], replace the old s functionality with ss
 map('n', 's', '', { noremap = true })
 map('n', 'ss', 'xi', { noremap = true, silent = true })
@@ -55,8 +61,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- Diagnostic keymaps
 map('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
 map('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
-map('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
-map('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+map('n', '<leader>de', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
+map('n', '<leader>dq', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
 -- Disable arrow keys for normal mode navigation
 map('n', '<Up>', '<NOP>', { noremap = true, silent = true })
@@ -94,6 +100,9 @@ map('n', '<leader>O', 'm`O<Esc>``', { noremap = true, silent = true })
 
 -- Close the current buffer (file) with leader key + 'q'
 map('n', '<leader>q', ':Bdelete<CR>', { noremap = true, silent = true })
+
+-- close current windows
+map('n', '<leader>c', ':q<CR>', { noremap = true, silent = true })
 
 -- Nvim-Tree keybinds
 map('n', '<leader>t', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
@@ -163,9 +172,8 @@ require('ibl').setup()
 
 require('lualine').setup {
   extensions = { 'nvim-tree' },
-  theme = 'vscode',
   options = {
-    icons_enabled = true,
+    theme = 'vscode',
     globalstatus = true,
   }
 }
