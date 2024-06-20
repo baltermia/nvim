@@ -260,7 +260,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     map('n', '<leader>rn', vim.lsp.buf.rename, { desc = '[R]e[n]ame' })
     map('n', '<F2>', vim.lsp.buf.rename, { desc = '[R]e[n]ame' })
     map('n', '<leader>ca', vim.lsp.buf.code_action, { desc = '[C]ode [A]ction' })
-    map('n', 'K', vim.lsp.buf.hover, { desc = 'Hover Documentation' })
+    map('n', '<leader>i', vim.lsp.buf.hover, { desc = 'Hover Documentation / [I]nfo' })
     map('n', 'gD', vim.lsp.buf.declaration, { desc = '[G]oto [D]eclaration' })
 
     -- highlights references
@@ -337,7 +337,24 @@ require('mason-lspconfig').setup({
   },
 })
 
-require('fidget').setup()
+-- treesitter
+require('nvim-treesitter.install').prefer_git = true
+require('nvim-treesitter.configs').setup({
+  ensure_installed = langs,
+  auto_install = true,
+  highlight = {
+    enable = true,
+  },
+  indent = { enable = true },
+})
+
+-- Customize LSP hover window borders
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+  vim.lsp.handlers.hover, {
+    -- Define border style: "single", "double", "rounded", "solid", or "shadow"
+    border = "rounded"
+  }
+)
 
 -- cmp
 cmp = require('cmp')
@@ -378,16 +395,4 @@ local langs = {
   'c_sharp', 
   'cmake' 
 }
-
--- treesitter
-require('nvim-treesitter.install').prefer_git = true
-require('nvim-treesitter.configs').setup({
-  ensure_installed = langs,
-  auto_install = true,
-  highlight = {
-    enable = true,
-  },
-  indent = { enable = true },
-})
-
 
