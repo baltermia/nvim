@@ -337,6 +337,13 @@ require('mason-lspconfig').setup({
   },
 })
 
+local langs = { 
+  'c', 
+  'cpp', 
+  'c_sharp', 
+  'cmake' 
+}
+
 -- treesitter
 require('nvim-treesitter.install').prefer_git = true
 require('nvim-treesitter.configs').setup({
@@ -388,11 +395,4 @@ require('vscode').setup()
 -- Set the colorscheme
 vim.o.background = 'dark'
 vim.cmd([[colorscheme vscode]])
-
-local langs = { 
-  'c', 
-  'cpp', 
-  'c_sharp', 
-  'cmake' 
-}
 
