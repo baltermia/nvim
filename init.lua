@@ -393,7 +393,14 @@ require('gruvbox').setup({
   contrast = 'hard',
 })
 
-require('vscode').setup()
+local colors = require('vscode.colors').get_colors()
+require('vscode').setup({
+  group_overrides = {
+    ['@property'] = { fg = '#DCDADC', bg = colors.vscNone },
+    ['@interface'] = { fg = '#B8D7A3', bg = colors.vscNone },
+    ['@structure'] = { fg = '#86C691', bg = colors.vscNone },
+  }
+})
 
 -- Set the colorscheme
 vim.o.background = 'dark'
