@@ -28,6 +28,7 @@ The `<leader>` key is set to `<Space>`.
 | `<Leader>x`     | Focus on Nvim-Tree                          |
 | `<Leader>u`     | Toggle UndoTree                             |
 | `<Leader>c`     | Close current window                        |
+| `<Leader>f`     | Open current file in NvimTree               |
 
 ## Plugin Specific Keybinds
 

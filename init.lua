@@ -105,10 +105,13 @@ map('n', '<leader>q', ':Bdelete<CR>', { noremap = true, silent = true })
 map('n', '<leader>c', ':q<CR>', { noremap = true, silent = true })
 
 -- Nvim-Tree keybinds
-map('n', '<leader>t', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
+map('n', '<leader>t', '<cmd>NvimTreeToggle<CR>', { noremap = true, silent = true })
 
 -- Open nvim-tree with leader + x
-map('n', '<leader>x', ':NvimTreeFocus<CR>', { noremap = true, silent = true })
+map('n', '<leader>x', '<cmd>NvimTreeFocus<CR>', { noremap = true, silent = true })
+
+-- open current buffer file in nvim tree
+map('n', '<leader>f', '<cmd>NvimTreeFindFile<CR>', { noremap = true, silent = true })
 
 -- Bufferline Keybinds
 -- Switch between tabs using leader key + number keys (1-9)
