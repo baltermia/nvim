@@ -21,6 +21,13 @@ vim.api.nvim_create_autocmd("FileType", {
   command = "wincmd L",
 })
 
+-- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+
+-- Enable break indent
+vim.opt.breakindent = true
+
 -- since surround uses [s], replace the old s functionality with ss
 map('n', 's', '', { noremap = true })
 map('n', 'ss', 'xi', { noremap = true, silent = true })
@@ -121,6 +128,10 @@ for i = 1, 9 do
     map('n', key, command, { noremap = true, silent = true })
 end
 
+-- tells teh auto pair plugin to also move the opening bracket on a new line
+vim.g.AutoPairsAutoLineBreak = { '{' }
+vim.g.AutoPairsSyncAutoBreakOptions = 1
+
 -- Cycle through tabs using leader key + tab
 map('n', '<leader><Tab>', ':BufferLineCycleNext<CR>', { noremap = true, silent = true })
 
@@ -184,6 +195,8 @@ require('lualine').setup {
 -- better around/inner and surround with s[acd] instead of [ycd]s
 require('mini.ai').setup({ n_lines = 500 })
 require('mini.surround').setup()
+-- TODO: use sandwich.vim instead
+-- also generally put all nvim extensions into vim?
 
 require('illuminate').configure({
   providers = {

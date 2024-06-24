@@ -73,6 +73,8 @@ return require('lazy').setup({
   },
 
   -- treesitter
-  { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' }
+  { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
+
+  'LunarWatcher/auto-pairs',
 })
 
