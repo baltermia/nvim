@@ -112,17 +112,14 @@ map('n', '<leader>q', ':Bdelete<CR>', { noremap = true, silent = true })
 map('n', '<leader>c', ':q<CR>', { noremap = true, silent = true })
 
 -- Nvim-Tree keybinds
-map('n', '<leader>t', '<cmd>NvimTreeToggle<CR>', { noremap = true, silent = true })
-
--- Open nvim-tree with leader + x
-map('n', '<leader>x', '<cmd>NvimTreeFocus<CR>', { noremap = true, silent = true })
-
+map('n', '<leader>tt', '<cmd>NvimTreeToggle<CR>', { noremap = true, silent = true })
+map('n', '<leader>t', '<cmd>NvimTreeFocus<CR>', { noremap = true, silent = true })
 -- open current buffer file in nvim tree
 map('n', '<leader>f', '<cmd>NvimTreeFindFile<CR>', { noremap = true, silent = true })
 
 -- Bufferline Keybinds
 -- Switch between tabs using leader key + number keys (1-9)
-for i = 1, 9 do
+for i = 0, 9 do
     local key = '<leader>' .. i
     local command = ':BufferLineGoToBuffer ' .. i .. '<CR>'
     map('n', key, command, { noremap = true, silent = true })
@@ -215,14 +212,30 @@ require('nvim-tree').setup()
 
 require('Comment').setup()
 
+local actions = require('telescope.actions')
+local open_with_trouble = require('trouble.sources.telescope').open
+
 -- configure telescope to show themes
 require('telescope').setup({
   extensions = {
     ['ui-select'] = {
       require('telescope.themes').get_dropdown(),
     },
+  },
+  defaults = {
+    mappings = {
+      i = { ["<c-t>"] = open_with_trouble },
+      n = { ["<c-t>"] = open_with_trouble },
+    }
   }
 })
+
+map('n', '<leader>xx', '<cmd>Trouble diagnostics toggle<cr>', { desc = 'Diagnostics (Trouble)' })
+map('n', '<leader>xX', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>', { desc = 'Buffer Diagnostics (Trouble)' })
+map('n', '<leader>cs', '<cmd>Trouble symbols toggle focus=false<cr>', { desc = 'Symbols (Trouble)' })
+map('n', '<leader>cl', '<cmd>Trouble lsp toggle focus=false win.position=right<cr>', { desc = 'LSP Definitions / references / ... (Trouble)' })
+map('n', '<leader>xL', '<cmd>Trouble loclist toggle<cr>', { desc = 'Location List (Trouble)' })
+map('n', '<leader>xQ', '<cmd>Trouble qflist toggle<cr>', { desc = 'Quickfix List (Trouble)' })
 
 -- Enable Telescope extensions if they are installed
 pcall(require('telescope').load_extension, 'fzf')
