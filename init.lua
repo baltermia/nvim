@@ -422,9 +422,12 @@ require('gruvbox').setup({
 local colors = require('vscode.colors').get_colors()
 require('vscode').setup({
   group_overrides = {
-    ['@property'] = { fg = '#DCDADC', bg = colors.vscNone },
-    ['@interface'] = { fg = '#B8D7A3', bg = colors.vscNone },
-    ['@structure'] = { fg = '#86C691', bg = colors.vscNone },
+    ['@lsp.type.property'] = { fg = '#DCDADC', bg = colors.vscNone },
+    ['@lsp.type.interface'] = { fg = '#B8D7A3', bg = colors.vscNone },
+    ['@lsp.type.struct'] = { fg = '#86C691', bg = colors.vscNone },
+    ['@lsp.type.namespace'] = { fg = '#DCDADC', bg = colors.vscNone },
+    ['@lsp.type.enum'] = { fg = '#B8D7A3', bg = colors.vscNone },
+    ['@lsp.type.enumMember'] = { fg = '#DCDADC', bg = colors.vscNone },
   }
 })
 
