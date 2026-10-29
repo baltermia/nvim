@@ -1,3 +1,18 @@
+
+# I've had enough - never using nvim again
+
+There is no real reason to user nvim besides wanting to waste time to create something that already exists and is better in any way.
+
+The main purpose of vim was always to improve the editing experience. What nvim adds to the vim name has nothing to do with that original idea. File-Navigation, Error-Listing, Debugging, Git-Diffs etc. are all IDE concerns.
+Why should you reinvent a IDE in the console. You want to edit files on a server? Just use vim. Why should you install a big nvim environment and what not just to edit some docker compose and config files... 
+Vim (or tiny-vim) is already preinstalled on pretty much any server OS and already has built-in syntax highlighting.
+
+If you really want to use vim for coding, just add it as a plugin to your IDE. VS Code has good vim integration. JetBrains IDEs have GREAT integration. Allowing you to add any plugins you want. Even VS 20XX has Vim integration (although not nearly as nice as JetBrains or VS Code).
+
+You're trying to solve the wrong problem with nvim. Just use a normal IDE with vim integration and add the 3-4 Plugins you actually use.
+
+---
+
 # Keybinds and Configurations
 
 ## Plugin Management
